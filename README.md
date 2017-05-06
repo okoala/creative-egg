@@ -1,2 +1,3 @@
 # creative-egg
-Egg.js 相关的有创意、有意思的库
+
+围绕 Egg.js 相关的创意实践
