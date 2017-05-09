@@ -6,9 +6,11 @@
   "dependencies": {
     "egg": "^1.1.0",
     "egg-passport-github": "^1.0.0",
-    "nosql": "^5.0.3"
+    "egg-sequelize": "^2.0.2",
+    "mysql": "^2.13.0"
   },
   "devDependencies": {
+    "@types/sequelize": "^4.0.52",
     "autod": "^2.8.0",
     "egg-bin": "^3.3.0",
     "egg-ci": "^1.6.0",

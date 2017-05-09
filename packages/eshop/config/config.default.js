@@ -12,5 +12,14 @@ module.exports = appInfo => {
     secret: 'your oauth secret',
   };
 
+  config.sequelize = {
+    dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
+    database: 'test',
+    host: 'localhost',
+    port: '3306',
+    username: 'root',
+    password: 'root',
+  };
+
   return config;
 };
