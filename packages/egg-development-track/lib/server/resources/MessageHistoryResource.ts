@@ -1,11 +1,15 @@
 'use strict';
 
-import { IMessageQuery } from '../storage/IMessageQuery';
-import { IResource } from './IResource';
 import { IServer } from '../IServer';
 import { MessageUtilities } from '../messaging/MessageUtilities';
+import { IMessageQuery } from '../storage/IMessageQuery';
+import { IResource } from './IResource';
 
 export class Resource implements IResource {
+    public name = 'message-history';
+    public uriTemplate = '?types={types}';
+    public type = 'client';
+
     private messageQuery: IMessageQuery;
 
     public constructor(server?: IServer) {
@@ -18,11 +22,8 @@ export class Resource implements IResource {
         this.messageQuery = messageQuery;
     }
 
-    public name = 'message-history';
-    public uriTemplate = '?types={types}';
-    public type = 'client';
     public invoke(req, res) {
-        const types = req.query.types ? req.query.types.split(',') : [ ];
+        const types = req.query.types ? req.query.types.split(',') : [];
         const messages = this.messageQuery.queryMessages(undefined, types);
         const payloads = MessageUtilities.toPayloadJson(messages);
 

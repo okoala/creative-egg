@@ -6,65 +6,64 @@ import { IResourceManager } from './IResourceManager';
 import { UriTemplate } from './UriTemplate';
 
 export class ResourceManager implements IResourceManager {
-    private resourceTable: { [key: string]: IResource } = {};
+  private resourceTable: { [key: string]: IResource } = {};
 
-    private getStartingSegment(path: string) {
-        let startingSegment = '';
-        let remaining = '';
+  public get resources(): IResource[] {
+    return _.values<IResource>(this.resourceTable);
+  }
 
-        let firstSlash = path.indexOf('/', 1);
-        if (firstSlash > 0) {
-            startingSegment = path.substring(1, firstSlash);
-            remaining = path.substring(firstSlash, path.length);
-        }
-        else {
-            startingSegment = path.substring(1, path.length);
-            remaining = '/';
-        }
+  public getUriTemplates(baseUri: string): { [key: string]: string } {
+    const resources = _(this.resources)
+      .filter((resource) => resource.templateName !== undefined)
+      .reduce<{ [key: string]: string }>(
+      (result, resource) => {
+        result[resource.templateName] = UriTemplate.fromResource(baseUri, resource);
+        return result;
+      },
+      {});
 
+    return resources;
+  }
+
+  public register(resource: IResource) {
+    this.resourceTable[resource.name] = resource;
+  }
+
+  public match(req: http.ServerRequest) {
+    const startingSegment = this.getStartingSegment(req.url);
+    if (startingSegment.segment) {
+      const resource = this.resourceTable[startingSegment.segment];
+      if (resource) {
+        // change the url to be inline with the behavior of a app.use
+        req.url = startingSegment.remaining;
+
+        const parameters = undefined; // TODO: need to pull out this part
         return {
-            segment: startingSegment,
-            remaining: remaining
+          parameters,
+          resource,
         };
+      }
     }
 
-    public get resources(): IResource[] {
-        return _.values<IResource>(this.resourceTable);
+    return undefined;
+  }
+
+  private getStartingSegment(path: string) {
+    let startingSegment = '';
+    let remaining = '';
+
+    const firstSlash = path.indexOf('/', 1);
+    if (firstSlash > 0) {
+      startingSegment = path.substring(1, firstSlash);
+      remaining = path.substring(firstSlash, path.length);
+    } else {
+      startingSegment = path.substring(1, path.length);
+      remaining = '/';
     }
 
-    public getUriTemplates(baseUri: string): { [key: string]: string } {
-        const resources = _(this.resources)
-                .filter(resource => resource.templateName !== undefined)
-                .reduce<{ [key: string]: string }>(
-                    (result, resource) => {
-                        result[resource.templateName] = UriTemplate.fromResource(baseUri, resource);
-                        return result;
-                    },
-                    {});
-
-        return resources;
-    }
-
-    public register(resource: IResource) {
-        this.resourceTable[resource.name] = resource;
-    }
-
-    public match(req: http.ServerRequest) {
-        let startingSegment = this.getStartingSegment(req.url);
-        if (startingSegment.segment) {
-            let resource = this.resourceTable[startingSegment.segment];
-            if (resource) {
-                // change the url to be inline with the behavior of a app.use
-                req.url = startingSegment.remaining;
-
-                let parameters = undefined; // TODO: need to pull out this part
-                return {
-                    parameters: parameters,
-                    resource: resource
-                };
-            }
-        }
-
-        return undefined;
-    }
+    return {
+      segment: startingSegment,
+      remaining,
+    };
+  }
 }

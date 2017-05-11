@@ -1,50 +1,49 @@
-'use strict';
-
+import { IConfigSettings } from '../../common';
 import { Hash } from '../services/hash';
-import { IConfigSettings } from '@glimpse/glimpse-common';
-import { IResource } from './IResource';
-import { IResourceManager } from './IResourceManager';
 import { IVersionInfoService } from '../version/IVersionInfoService';
 import { IServer } from './../IServer';
+import { IResource } from './IResource';
+import { IResourceManager } from './IResourceManager';
 import { UriTemplate } from './UriTemplate';
 
 import * as _ from 'lodash';
 
 export class Resource implements IResource {
-    private configSettings: IConfigSettings;
-    private resourceManager: IResourceManager;
-    private versionInfoService: IVersionInfoService;
+  public name = 'metadata';
+  public uriTemplate = '?hash={hash}';
+  public templateName = 'metadataTemplate';
+  public type = 'client';
 
-    constructor(server: IServer) {
-        this.configSettings = server.providers.configSettings;
-        this.resourceManager = server.providers.resourceManager;
-        this.versionInfoService = server.providers.versionInfoService;
-    }
+  private configSettings: IConfigSettings;
+  private resourceManager: IResourceManager;
+  private versionInfoService: IVersionInfoService;
 
-    public name = 'metadata';
-    public uriTemplate = '?hash={hash}';
-    public templateName = 'metadataTemplate';
-    public type = 'client';
-    public invoke(req, res) {
-        const baseUri = UriTemplate.getBaseUri(this.configSettings, req);
+  constructor(server: IServer) {
+    this.configSettings = server.providers.configSettings;
+    this.resourceManager = server.providers.resourceManager;
+    this.versionInfoService = server.providers.versionInfoService;
+  }
 
-        const resources = _(this.resourceManager.resources)
-            .reduce<{ [key: string]: string }>(
-                (result, resource) => {
-                    result[resource.name] = UriTemplate.fromResource(baseUri, resource);
-                    return result;
-                },
-                {});
+  public invoke(req, res) {
+    const baseUri = UriTemplate.getBaseUri(this.configSettings, req);
 
-        const resourceHash = Hash.hashObject(resources);
+    const resources = _(this.resourceManager.resources)
+      .reduce<{ [key: string]: string }>(
+      (result, resource) => {
+        result[resource.name] = UriTemplate.fromResource(baseUri, resource);
+        return result;
+      },
+      {});
 
-        const metadata = {
-            'versions': this.versionInfoService.allInfo,
-            'resources': resources,
-            'hash': resourceHash,
-            'experimentalMode' : this.configSettings.getBoolean('enable.experimental.features', false)
-        };
+    const resourceHash = Hash.hashObject(resources);
 
-        res.json(metadata);
+    const metadata = {
+      versions: this.versionInfoService.allInfo,
+      resources,
+      hash: resourceHash,
+      experimentalMode: this.configSettings.getBoolean('enable.experimental.features', false),
     };
+
+    res.json(metadata);
+  }
 }

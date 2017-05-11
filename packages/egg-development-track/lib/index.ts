@@ -1,7 +1,7 @@
-var glimpseAgent = require("../glimpse-agent-node"),
-  glimpseServer = require("../glimpse-server");
+import glimpseAgent from './agent-node';
+import glimpseServer from './server';
 
-var _ = require("lodash");
+import * as _ from 'lodash';
 
 module.exports = {
   agent: glimpseAgent.agent,
