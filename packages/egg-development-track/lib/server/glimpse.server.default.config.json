@@ -1,0 +1,4 @@
+{
+    "enable.experimental.features": false,
+    "server.max.json.body.size": 135000
+}
