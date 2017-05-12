@@ -2,6 +2,7 @@
   "extends": "tslint:latest",
   "rules": {
     "prefer-for-of": false,
+    "no-empty-interface": false,
     "quotemark": [
       true,
       "single",
