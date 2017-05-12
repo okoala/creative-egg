@@ -3,5 +3,5 @@
 import { DateTimeValue } from './DateTimeValue';
 
 export interface IDateTime {
-    now: DateTimeValue;
+   now: DateTimeValue;
 }

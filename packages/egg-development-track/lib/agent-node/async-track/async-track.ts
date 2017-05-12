@@ -76,7 +76,7 @@ class AsyncTrack implements IAsyncTrack {
       return;
     }
 
-    for (let prop in fromObj) {
+    for (const prop in fromObj) {
       if (fromObj.hasOwnProperty(prop) && !toObj.hasOwnProperty(prop)) {
         toObj[prop] = fromObj[prop];
       }
@@ -92,7 +92,7 @@ class AsyncTrack implements IAsyncTrack {
       return fromObj;
     }
 
-    for (let prop in fromObj) {
+    for (const prop in fromObj) {
       if (fromObj.hasOwnProperty(prop) && !toObj.hasOwnProperty(prop)) {
         toObj[prop] = fromObj[prop];
       }
@@ -259,8 +259,7 @@ class AsyncTrack implements IAsyncTrack {
           }
         }
         return save.apply(this, arguments);
-
-      };
+      }
     };
 
   }
@@ -291,13 +290,13 @@ class AsyncTrack implements IAsyncTrack {
       pkg = entity.pkg;
       config = entity.config;
       const curPath = entity.path;
-      for (let prop in config) {
+      for (const prop in config) {
         if (config.hasOwnProperty(prop)) {
 
           if (prop !== '__returnVal__' && prop !== '__configType__' &&
             prop !== '__parameter__' && prop !== '__new__') {
 
-            let newPath = curPath.slice(0);
+            const newPath = curPath.slice(0);
             newPath.push(prop);
 
             if (config[prop].__configType__ === 'package') {

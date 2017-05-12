@@ -1,51 +1,52 @@
 'use strict';
 
-import { glimpseServerRequest } from  '../messaging/GlimpseServerRequest';
+import { glimpseServerRequest } from '../messaging/GlimpseServerRequest';
 
 import { IDeferredInitializationManager } from '../IDeferredInitializationManager';
 import { IResourceProvider } from './IResourceProvider';
 
 interface IResourceProviderCallback {
-    (resources: { [key: string]: string }): void;
+  (resources: { [key: string]: string }): void;
 }
 
 export class ResourceProviderHttp implements IResourceProvider {
-    private static EXPORT_CONFIG_RESOURCE_NAME = 'export-config';
+  private static EXPORT_CONFIG_RESOURCE_NAME = 'export-config';
 
-    private resources: { [key: string]: string };
+  private resources: { [key: string]: string };
 
-    public constructor(private metadataUri: string, private deferredInitializationManager: IDeferredInitializationManager) {
-        deferredInitializationManager.onInit(done => {
-            glimpseServerRequest(this.metadataUri, (metadataErr, metadataRes, metadataBody) => {
-                if (metadataErr) {
-                    return done(metadataErr);
-                }
+  public constructor(
+    private metadataUri: string,
+    private deferredInitializationManager: IDeferredInitializationManager,
+  ) {
+    deferredInitializationManager.onInit(done => {
+      glimpseServerRequest(this.metadataUri, (metadataErr, metadataRes, metadataBody) => {
+        if (metadataErr) {
+          return done(metadataErr);
+        }
 
-                const metadata = JSON.parse(metadataBody);
+        const metadata = JSON.parse(metadataBody);
 
-                const exportConfigUri = metadata.resources[ResourceProviderHttp.EXPORT_CONFIG_RESOURCE_NAME];
+        const exportConfigUri = metadata.resources[ResourceProviderHttp.EXPORT_CONFIG_RESOURCE_NAME];
 
-                if (exportConfigUri) {
-                    glimpseServerRequest(exportConfigUri, (exportErr, exportRes, exportBody) => {
-                        if (exportErr) {
-                            return done(exportErr);
-                        }
+        if (exportConfigUri) {
+          glimpseServerRequest(exportConfigUri, (exportErr, exportRes, exportBody) => {
+            if (exportErr) {
+              return done(exportErr);
+            }
 
-                        this.resources = JSON.parse(exportBody);
+            this.resources = JSON.parse(exportBody);
 
-                        done();
-                    });
-                }
-                else {
-                    this.resources = {};
+            done();
+          });
+        } else {
+          this.resources = {};
+          done();
+        }
+      });
+    });
+  }
 
-                    done();
-                }
-            });
-        });
-    }
-
-    public getResourceDefinitions(): { [key: string]: string } {
-        return this.resources;
-    }
+  public getResourceDefinitions(): { [key: string]: string } {
+    return this.resources;
+  }
 }
