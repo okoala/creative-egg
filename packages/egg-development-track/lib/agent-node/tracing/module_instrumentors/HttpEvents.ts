@@ -11,9 +11,9 @@ import { ClientRequest, IncomingMessage } from 'http';
  * @property {object} options - The options passed to `http.request`
  */
 export interface IClientRequestCreatedEvent {
-    id: string;
-    req: ClientRequest;
-    options;
+  id: string;
+  req: ClientRequest;
+  options;
 }
 export const EVENT_HTTP_CLIENT_REQUEST_CREATED = 'invoke|post|module:httpClient.request-created';
 
@@ -26,9 +26,9 @@ export const EVENT_HTTP_CLIENT_REQUEST_CREATED = 'invoke|post|module:httpClient.
  * @proprety {Buffer|String} chunk - The data chunk written to the remote server
  */
 export interface IClientRequestDataSentEvent {
-    id: string;
-    req: ClientRequest;
-    chunk: Buffer | string;
+  id: string;
+  req: ClientRequest;
+  chunk: Buffer | string;
 }
 export const EVENT_HTTP_CLIENT_REQUEST_DATA_SENT = 'invoke|pre|module:httpClient.request-data-sent';
 
@@ -40,8 +40,8 @@ export const EVENT_HTTP_CLIENT_REQUEST_DATA_SENT = 'invoke|pre|module:httpClient
  * @property {ClientRequest} req - The client request object returned from `http.request`
  */
 export interface IClientRequestEndEvent {
-    id: string;
-    req: ClientRequest;
+  id: string;
+  req: ClientRequest;
 }
 export const EVENT_HTTP_CLIENT_REQUEST_END = 'invoke|post|module:httpClient.request-end';
 
@@ -55,9 +55,9 @@ export const EVENT_HTTP_CLIENT_REQUEST_END = 'invoke|post|module:httpClient.requ
  * @property {Error|string} error - The error that occured
  */
 export interface IClientRequestErrorEvent {
-    id: string;
-    req: ClientRequest;
-    error: Error | string;
+  id: string;
+  req: ClientRequest;
+  error: Error | string;
 }
 export const EVENT_HTTP_CLIENT_REQUEST_ERROR = 'notify|module:httpClient.request-error';
 
@@ -71,9 +71,9 @@ export const EVENT_HTTP_CLIENT_REQUEST_ERROR = 'notify|module:httpClient.request
  *      to the `response` event.
  */
 export interface IClientResponseReceivedEvent {
-    id: string;
-    req: ClientRequest;
-    res: IncomingMessage;
+  id: string;
+  req: ClientRequest;
+  res: IncomingMessage;
 }
 export const EVENT_HTTP_CLIENT_RESPONSE_RECEIVED = 'notify|module:httpClient.response-received';
 
@@ -87,10 +87,10 @@ export const EVENT_HTTP_CLIENT_RESPONSE_RECEIVED = 'notify|module:httpClient.res
  *      to the `response` event.
  */
 export interface IClientResponseDataReceivedEvent {
-    id: string;
-    req: ClientRequest;
-    res: IncomingMessage;
-    chunk: Buffer | string;
+  id: string;
+  req: ClientRequest;
+  res: IncomingMessage;
+  chunk: Buffer | string;
 }
 export const EVENT_HTTP_CLIENT_RESPONSE_DATA_RECEIVED = 'notify|module:httpClient.response-data-received';
 
@@ -102,9 +102,9 @@ export const EVENT_HTTP_CLIENT_RESPONSE_DATA_RECEIVED = 'notify|module:httpClien
  * @property {IncomingMessage} res - The incoming response from the remote server, as passed
  */
 export interface IClientResponseEndEvent {
-    id: string;
-    req: ClientRequest;
-    res: IncomingMessage;
+  id: string;
+  req: ClientRequest;
+  res: IncomingMessage;
 }
 export const EVENT_HTTP_CLIENT_RESPONSE_END = 'notify|module:httpClient.response-end';
 
@@ -118,9 +118,9 @@ export const EVENT_HTTP_CLIENT_RESPONSE_END = 'notify|module:httpClient.response
  * @property {Error|string} error - The error that occured
  */
 export interface IClientResponseErrorEvent {
-    id: string;
-    req: ClientRequest;
-    res: IncomingMessage;
-    error: Error | string;
+  id: string;
+  req: ClientRequest;
+  res: IncomingMessage;
+  error: Error | string;
 }
 export const EVENT_HTTP_CLIENT_RESPONSE_ERROR = 'notify|module:httpClient.response-error';

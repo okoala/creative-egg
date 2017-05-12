@@ -5,21 +5,21 @@
  */
 export interface IInstrumentationEvent {
 
-    /**
-     * The relative time that the event occured at. This is expressed as an
-     * array of two numbers as [seconds, nanoseconds] as returned from
-     * `process.hrtime()`
-     */
-    time: number[];
+  /**
+   * The relative time that the event occured at. This is expressed as an
+   * array of two numbers as [seconds, nanoseconds] as returned from
+   * `process.hrtime()`
+   */
+  time: number[];
 
-    /**
-     * The timestamp the event occured in, as returned from `Date.now()`, i.e.
-     * milliseconds since UNIX epoch.
-     */
-    timestamp: number;
+  /**
+   * The timestamp the event occured in, as returned from `Date.now()`, i.e.
+   * milliseconds since UNIX epoch.
+   */
+  timestamp: number;
 
-    /**
-     * Event specific data
-     */
-    data;
+  /**
+   * Event specific data
+   */
+  data;
 }

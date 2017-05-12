@@ -14,7 +14,8 @@
     <JSNamePath> :== See http://usejsdoc.org/about-namepaths.html for details
 */
 
-// EVENT_INVOKE_PRE_EXPRESS_ROUTE_METHOD gets raised for multiple methods that are defined in a list, so it doesn't precisely follow naming convention
+// EVENT_INVOKE_PRE_EXPRESS_ROUTE_METHOD gets raised for multiple methods that are defined in a list,
+// so it doesn't precisely follow naming convention
 export const EVENT_EXPRESS_INVOKE_PRE_ROUTE_METHOD = 'invoke|pre|module:/express.Route#**multi-method**';
 export const EVENT_EXPRESS_INVOKE_PRE_ROUTER_USE = 'invoke|pre|module:/express.Router#use';
 export const EVENT_EXPRESS_INVOKE_PRE_ROUTER = 'invoke|post|module:/express.Router';

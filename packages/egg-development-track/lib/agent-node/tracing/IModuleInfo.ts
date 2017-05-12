@@ -13,18 +13,18 @@
  *  and query the state of known modules.
  */
 export interface IModuleInfo {
-    /** path to module.  Uniquely identifies an IModuleInfo instance */
-    modulePath: string;
+  /** path to module.  Uniquely identifies an IModuleInfo instance */
+  modulePath: string;
 
-    /** the name of the module as passed to require() */
-    moduleId: string;
+  /** the name of the module as passed to require() */
+  moduleId: string;
 
-    /** version of the module */
-    version: string;
+  /** version of the module */
+  version: string;
 
-    /** true for modules that ship in node core */
-    isBuiltIn: boolean;
+  /** true for modules that ship in node core */
+  isBuiltIn: boolean;
 
-    /** result of the original require() call */
-    originalModule;
+  /** result of the original require() call */
+  originalModule;
 }

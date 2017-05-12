@@ -8,15 +8,15 @@ import { IModuleInfo } from './IModuleInfo';
  */
 export interface IModuleInstrumentor {
 
-    /**
-     * The module IDs supported by this instrumentation manager,
-     * e.g. `{ 'http': '>=4.0.0 <7.0.0', 'https': '>=6.0.0 <7.0.0' }`
-     */
-    supportedModules: { [ moduleName: string ]: string; };
+  /**
+   * The module IDs supported by this instrumentation manager,
+   * e.g. `{ 'http': '>=4.0.0 <7.0.0', 'https': '>=6.0.0 <7.0.0' }`
+   */
+  supportedModules: { [ moduleName: string ]: string; };
 
-    /**
-     * Enables instrumentation for the module described by `moduleInfo` and
-     * returns the instrumentation information, if instrumentation was enabled
-     */
-    enableInstrumentation(moduleInfo: IModuleInfo): IEnableInstrumentationResult;
+  /**
+   * Enables instrumentation for the module described by `moduleInfo` and
+   * returns the instrumentation information, if instrumentation was enabled
+   */
+  enableInstrumentation(moduleInfo: IModuleInfo): IEnableInstrumentationResult;
 }

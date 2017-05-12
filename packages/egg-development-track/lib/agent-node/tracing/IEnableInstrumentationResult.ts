@@ -7,9 +7,9 @@
  */
 export interface IEnableInstrumentationResult {
 
-    /** Whether or not instrumentation of the module was enabled */
-    isEnabled: boolean;
+  /** Whether or not instrumentation of the module was enabled */
+  isEnabled: boolean;
 
-    /** If `isEnabled` is false, the reason instrumentation could not be enabled */
-    status?: string;
+  /** If `isEnabled` is false, the reason instrumentation could not be enabled */
+  status?: string;
 }

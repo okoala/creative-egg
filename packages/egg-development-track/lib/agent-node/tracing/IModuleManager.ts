@@ -9,6 +9,6 @@ import { IModuleInstrumentor } from './IModuleInstrumentor';
  */
 export interface IModuleManager {
 
-    /** register the given IProxyFactory for the given module ID */
-    addModuleInstrumentor(factory: IModuleInstrumentor);
+  /** register the given IProxyFactory for the given module ID */
+  addModuleInstrumentor(factory: IModuleInstrumentor);
 }
