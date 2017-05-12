@@ -7,16 +7,16 @@ import { MongoDBCoreProxy } from './MongoDBCoreProxy';
 
 export class MongoDBCoreModuleInstrumentor implements IModuleInstrumentor {
 
-    public get supportedModules(): { [ moduleName: string ]: string; } {
-        return {
-            'mongodb-core': '>=1.2.0 <2.2.0'
-        };
-    }
+  public get supportedModules(): { [moduleName: string]: string; } {
+    return {
+      'mongodb-core': '>=1.2.0 <2.2.0',
+    };
+  }
 
-    public enableInstrumentation(moduleInfo: IModuleInfo): IEnableInstrumentationResult {
-        (new MongoDBCoreProxy()).init(moduleInfo);
-        return {
-            isEnabled: true
-        };
-    }
+  public enableInstrumentation(moduleInfo: IModuleInfo): IEnableInstrumentationResult {
+    (new MongoDBCoreProxy()).init(moduleInfo);
+    return {
+      isEnabled: true,
+    };
+  }
 }

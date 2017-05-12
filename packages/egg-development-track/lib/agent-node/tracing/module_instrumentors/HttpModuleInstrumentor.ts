@@ -1,5 +1,3 @@
-'use strict';
-
 import { IModuleInstrumentor } from '../IModuleInstrumentor';
 import { IModuleInfo } from '../IModuleInfo';
 import { IEnableInstrumentationResult } from '../IEnableInstrumentationResult';
