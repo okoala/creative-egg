@@ -1,6 +1,7 @@
 {
   "extends": "tslint:latest",
   "rules": {
+    "prefer-for-of": false,
     "quotemark": [
       true,
       "single",
@@ -13,14 +14,17 @@
       "error",
       "warn"
     ],
+    "callable-types": false,
     "space-before-function-paren": false,
     "interface-name": [
-      true,
-      "no-prefix"
+      true
     ],
     "adjacent-overload-signatures": true,
     "member-access": [
       true
+    ],
+    "ordered-imports": [
+      false
     ],
     "member-ordering": [
       true,
@@ -37,6 +41,9 @@
       true,
       "allow-leading-underscore"
     ],
-    "align": [true, "statements"]
+    "align": [
+      true,
+      "statements"
+    ]
   }
 }

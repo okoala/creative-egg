@@ -1,87 +1,87 @@
 import {
-    IDeferredInitializationCallback,
-    IDeferredInitializationManager,
-    IDeferredInitializationRegisteredCallback
+  IDeferredInitializationCallback,
+  IDeferredInitializationManager,
+  IDeferredInitializationRegisteredCallback,
 } from './IDeferredInitializationManager';
 
 /**
  * A component for managing deferred, asynchronous initialization.
  */
 export class DeferredInitializationManager implements IDeferredInitializationManager {
-    private err: Error;
-    private registered: IDeferredInitializationRegisteredCallback[] = [];
-    private state: ('NOT_INITIALIZED' | 'INITIALIZING' | 'INITIALIZED') = 'NOT_INITIALIZED';
-    private waiters: IDeferredInitializationCallback[] = [];
+  private err: Error;
+  private registered: IDeferredInitializationRegisteredCallback[] = [];
+  private state: ('NOT_INITIALIZED' | 'INITIALIZING' | 'INITIALIZED') = 'NOT_INITIALIZED';
+  private waiters: IDeferredInitializationCallback[] = [];
 
-    /**
-     * Called when deferred initialization should be performed.
-     * 
-     * NOTE: This should ideally be called once, prior to the first request being received.
-     * 
-     * @param done A callback called when initialization is complete. 
-     */
-    public init(done: IDeferredInitializationCallback): void {
-        if (this.state === 'INITIALIZED') {
-            // Initialization is complete so just immediately invoke the callback...
-            return done(this.err);
-        }
-
-        // Initialization has not started or is ongoing, so wait for completion...
-        this.waiters.push(done);
-
-        if (this.state === 'NOT_INITIALIZED') {
-            // This is the first call to init() so kick off initialization...
-            this.performInitialization();
-        }
+  /**
+   * Called when deferred initialization should be performed.
+   *
+   * NOTE: This should ideally be called once, prior to the first request being received.
+   *
+   * @param done A callback called when initialization is complete.
+   */
+  public init(done: IDeferredInitializationCallback): void {
+    if (this.state === 'INITIALIZED') {
+      // Initialization is complete so just immediately invoke the callback...
+      return done(this.err);
     }
 
-    /**
-     * Register a callback to be invoked when deferred initialization is to be performed.
-     * 
-     * @param init The callback to be invoked during initialization.
-     */
-    public onInit(init: IDeferredInitializationRegisteredCallback): void {
-        if (this.state !== 'NOT_INITIALIZED') {
-            throw new Error('onInit() must be called prior to the start of initialization.');
-        }
+    // Initialization has not started or is ongoing, so wait for completion...
+    this.waiters.push(done);
 
-        this.registered.push(init);
+    if (this.state === 'NOT_INITIALIZED') {
+      // This is the first call to init() so kick off initialization...
+      this.performInitialization();
+    }
+  }
+
+  /**
+   * Register a callback to be invoked when deferred initialization is to be performed.
+   *
+   * @param init The callback to be invoked during initialization.
+   */
+  public onInit(init: IDeferredInitializationRegisteredCallback): void {
+    if (this.state !== 'NOT_INITIALIZED') {
+      throw new Error('onInit() must be called prior to the start of initialization.');
     }
 
-    private performInitialization() {
-        this.state = 'INITIALIZING';
+    this.registered.push(init);
+  }
 
-        // TODO: Consider running each in parallel?
+  private performInitialization() {
+    this.state = 'INITIALIZING';
 
-        const loop = () => {
-            if (this.registered.length) {
-                const current = this.registered.shift();
+    // TODO: Consider running each in parallel?
 
-                return current(err => {
-                    if (err) {
-                        return this.completeInitialization(err);
-                    }
+    const loop = () => {
+      if (this.registered.length) {
+        const current = this.registered.shift();
 
-                    loop();
-                });
-            }
+        return current((err) => {
+          if (err) {
+            return this.completeInitialization(err);
+          }
 
-            this.completeInitialization(undefined);
-        };
+          loop();
+        });
+      }
 
-        loop();
+      this.completeInitialization(undefined);
+    };
+
+    loop();
+  }
+
+  private completeInitialization(err: Error) {
+    this.err = err;
+    this.state = 'INITIALIZED';
+
+    while (this.waiters.length) {
+      const waiter = this.waiters.shift();
+
+      waiter(this.err);
     }
-
-    private completeInitialization(err: Error) {
-        this.err = err;
-        this.state = 'INITIALIZED';
-
-        while (this.waiters.length) {
-            const waiter = this.waiters.shift();
-
-            waiter(this.err);
-        }
-    }
+  }
 }
 
 export default DeferredInitializationManager;

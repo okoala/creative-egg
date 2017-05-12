@@ -9,7 +9,8 @@ export { ExpressEvents };
 export { ContextManagerProvider } from './messaging/ContextManagerProvider';
 
 // need to import IAgent to get around some errors when generating typescript definitions
-//tslint:disable-next-line:no-unused-variable
+// tslint:disable-next-line
+// tslint:no-unused-variable
 import { IAgent } from './IAgent';
 import { createGlobalNodeAgent } from './Agent';
 const agent = createGlobalNodeAgent();

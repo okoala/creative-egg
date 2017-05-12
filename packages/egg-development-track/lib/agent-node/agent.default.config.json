@@ -1,0 +1,30 @@
+{
+  "enable.experimental.features": false,
+  "instrumentor.body-parser.enabled": true,
+  "instrumentor.console.enabled": true,
+  "instrumentor.cookie-parser.enabled": true,
+  "instrumentor.express.enabled": true,
+  "instrumentor.http.enabled": true,
+  "instrumentor.https.enabled": true,
+  "instrumentor.knex.enabled": true,
+  "instrumentor.mongodb-core.enabled": true,
+  "instrumentor.mongodb.enabled": true,
+  "instrumentor.morgan.enabled": true,
+  "inspector.http.body.capture.maxsize": 132000,
+  "instrumentor.console.stack-capture.size": 10,
+  "agent.validate-packages.enabled": true,
+  "agent.validate-packages.excludedPackages": [
+    {
+      "packageName": "./index"
+    },
+    {
+      "packageName": "../common"
+    },
+    {
+      "packageName": "../agent-node"
+    },
+    {
+      "packageName": "../server"
+    }
+  ]
+}

@@ -14,7 +14,7 @@ export function createMultiPartFormSummarizer(contentTypeHeader: string): IMulti
     if (HttpHelper.isMultiPartFormData(contentType)) {
         const boundary = HttpHelper.getMultiPartFormBoundary(contentType);
         if (boundary && HttpHelper.isValidBoundary(boundary)) {
-            //return new DicerSummarizer(boundary);
+            // return new DicerSummarizer(boundary);
             return new CustomParserMultiPartSummarizer(boundary);
         }
     }
@@ -58,8 +58,7 @@ export class DicerMultiPartSummarizer implements IMultiPartFormSummarizer {
         if (!this.failed) {
             try {
                 this.dicer.write(chunk);
-            }
-            catch (err) {
+            } catch (err) {
                 // dicer doesn't handle some input gracefully (e.g., whitespace after a boundary)
                 // swallow exceptions here, and just forget about getting any part summaries.
                 // primary thing is we don't blow up the request because we can't parse the input
@@ -95,7 +94,7 @@ export class CustomParserMultiPartSummarizer implements IMultiPartFormSummarizer
                 headers: this.convertRawHeaders(s.rawHeaders),
                 bodyStartIndex: s.bodyStartIndex,
                 bodyEndIndex: s.bodyEndIndex,
-                bodyLength: s.bodyEndIndex - s.bodyStartIndex
+                bodyLength: s.bodyEndIndex - s.bodyStartIndex,
             };
         });
         return summaries;
