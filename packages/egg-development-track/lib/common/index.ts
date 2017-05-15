@@ -4,7 +4,14 @@ export { ConfigSettings } from './configuration/ConfigSettings';
 export { IConfigSettings } from './configuration/IConfigSettings';
 
 // telemetry
-export { TelemetryService, ITelemetryService, GlimpseComponentType, IProperties, ICommonProperties, IMeasurements } from './telemetry/TelemetryService';
+export {
+  TelemetryService,
+  ITelemetryService,
+  GlimpseComponentType,
+  IProperties,
+  ICommonProperties,
+  IMeasurements,
+} from './telemetry/TelemetryService';
 export { getTelemetryConfig, ITelemetryConfig } from './telemetry/TelemetryConfig';
 export { getTelemetryAppInstanceData, ITelemetryAppInstanceData } from './telemetry/TelemetryAppInstanceData';
 export { TelemetryEvents } from './telemetry/TelemetryEvents';
@@ -17,18 +24,18 @@ export { TelemetryErrorReportingService } from './errors/TelemetryErrorReporting
 export { CompositeErrorReportingService } from './errors/CompositeErrorReportingService';
 export { ErrorCode, getSlugForErrorCode, getUrlForErrorCode } from './errors/ErrorCodes';
 export {
-    createNoContextError,
-    createPackageRequiredBeforeInitError,
-    createUnexpectedContextError,
-    createUnsupportedPackageRequiredError,
-    createHttpClientError,
-    createHttpServerError,
-    createAuthorizationInvocationFailedError,
-    createStackHelperUnsupportedSourceMapUriError,
-    createStackHelperUnsupportedStackFrameFormat,
-    createHttpServerEarlyRequestTerminationError,
-    createAsyncTrackError,
-    createAsyncTrackWarning
+  createNoContextError,
+  createPackageRequiredBeforeInitError,
+  createUnexpectedContextError,
+  createUnsupportedPackageRequiredError,
+  createHttpClientError,
+  createHttpServerError,
+  createAuthorizationInvocationFailedError,
+  createStackHelperUnsupportedSourceMapUriError,
+  createStackHelperUnsupportedStackFrameFormat,
+  createHttpServerEarlyRequestTerminationError,
+  createAsyncTrackError,
+  createAsyncTrackWarning,
 } from './errors/Errors';
 
 // logging

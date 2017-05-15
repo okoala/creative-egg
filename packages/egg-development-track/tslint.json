@@ -12,7 +12,7 @@
       true,
       "dir",
       "log",
-      "error",
+      // "error",
       "warn"
     ],
     "callable-types": false,

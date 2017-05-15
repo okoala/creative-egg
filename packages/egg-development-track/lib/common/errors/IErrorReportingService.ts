@@ -1,5 +1,5 @@
 import { IGlimpseError } from './IGlimpseError';
 
 export interface IErrorReportingService {
-    reportError(error: IGlimpseError, ...params): void;
+  reportError(error: IGlimpseError, ...params): void;
 }
