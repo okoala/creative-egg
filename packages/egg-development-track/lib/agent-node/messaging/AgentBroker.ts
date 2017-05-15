@@ -8,27 +8,27 @@ import { IMessageConverter } from './IMessageConverter';
 
 export class AgentBroker implements IAgentBroker {
 
-    private messageConverter: IMessageConverter;
+  private messageConverter: IMessageConverter;
 
-    public constructor(private agent: IAgent) {
-        this.messageConverter = agent.providers.messageConverter;
+  public constructor(private agent: IAgent) {
+    this.messageConverter = agent.providers.messageConverter;
+  }
+
+  public createAndSendMessage<T>(data: T, types: string[], indices: object, context: IContext) {
+    if (!context) {
+      context = this.agent.providers.contextManager.currentContext();
     }
 
-    public createAndSendMessage<T>(data: T, types: string[], indices: Object, context: IContext) {
-        if (!context) {
-            context = this.agent.providers.contextManager.currentContext();
-        }
-
-        if (context) {
-            const message = this.messageConverter.createMessage(data, types, indices, context);
-            this.sendMessage(message);
-        }
+    if (context) {
+      const message = this.messageConverter.createMessage(data, types, indices, context);
+      this.sendMessage(message);
     }
+  }
 
-    /**
-     * send the given message
-     */
-    public sendMessage(message: ITransmittableMessage) {
-        this.agent.providers.messagePublisher.publishMessages([message]);
-    }
+  /**
+   * send the given message
+   */
+  public sendMessage(message: ITransmittableMessage) {
+    this.agent.providers.messagePublisher.publishMessages([message]);
+  }
 }

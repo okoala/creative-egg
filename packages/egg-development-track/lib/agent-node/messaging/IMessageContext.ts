@@ -1,6 +1,6 @@
 'use strict';
 
 export interface IMessageContext {
-    id: string;
-    type: string;
+  id: string;
+  type: string;
 }
